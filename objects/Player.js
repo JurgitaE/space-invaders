@@ -1,3 +1,4 @@
+import Projectile from './Projectile.js';
 class Player {
     constructor(game) {
         this.game = game;
@@ -13,8 +14,12 @@ class Player {
     update() {
         if (this.game.keys.indexOf('ArrowLeft') > -1) this.x -= this.speed;
         if (this.game.keys.indexOf('ArrowRight') > -1) this.x += this.speed;
-        if (this.x < 0) this.x = 0;
-        else if (this.x > this.game.width - this.width) this.x = this.game.width - this.width;
+        if (this.x < -this.width * 0.5) this.x = -this.width * 0.5;
+        else if (this.x > this.game.width - this.width * 0.5) this.x = this.game.width - this.width * 0.5;
+    }
+    shoot() {
+        const projectile = this.game.getProjectile();
+        if (projectile) projectile.start(this.x + this.width * 0.5, this.y);
     }
 }
 export default Player;
