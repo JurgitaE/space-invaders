@@ -1,5 +1,6 @@
 import Player from './Player.js';
 import Projectile from './Projectile.js';
+import Wave from './Wave.js';
 
 class Game {
     constructor(canvas) {
@@ -8,10 +9,17 @@ class Game {
         this.height = this.canvas.height;
         this.keys = [];
         this.player = new Player(this);
+
         this.projectilesPool = [];
         this.numberOfProjectiles = 10;
         this.createProjectiles();
-        console.log(this.projectilesPool);
+
+        this.columns = 3;
+        this.rows = 3;
+        this.enemySize = 60;
+
+        this.waves = [];
+        this.waves.push(new Wave(this));
 
         window.addEventListener('keydown', e => {
             !this.keys.includes(e.key) && this.keys.push(e.key);
@@ -29,6 +37,9 @@ class Game {
         this.projectilesPool.forEach(projectile => {
             projectile.update();
             projectile.draw(context);
+        });
+        this.waves.forEach(wave => {
+            wave.render(context);
         });
     }
     createProjectiles() {

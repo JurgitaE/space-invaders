@@ -6,7 +6,7 @@ class Player {
         this.height = 100;
         this.x = this.game.width * 0.5 - this.width * 0.5;
         this.y = this.game.height - this.height;
-        this.speed = 10;
+        this.speed = 10 / 2; //adjusted for 10/2
     }
     draw(context) {
         context.fillRect(this.x, this.y, this.width, this.height);
