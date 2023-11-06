@@ -21,6 +21,10 @@ class Game {
         this.waves = [];
         this.waves.push(new Wave(this));
 
+        this.loopTime = [];
+        this.fps = 0;
+        this.standardFps = 60;
+
         window.addEventListener('keydown', e => {
             !this.keys.includes(e.key) && this.keys.push(e.key);
             if (e.key === ' ') this.player.shoot();
@@ -32,6 +36,21 @@ class Game {
     }
 
     render(context) {
+        // implementing speed sensitivity to individual user fps
+
+        if (this.loopTime.length < 20) {
+            this.loopTime.push(Date.now());
+        }
+        if (this.loopTime.length === 20 && !this.fps) {
+            this.fps =
+                1000 /
+                (this.loopTime
+                    .map((x, i, arr) => (i !== this.loopTime.length ? this.loopTime[i + 1] - this.loopTime[i] : x))
+                    .slice(0, -1)
+                    .reduce((a, b) => a + b, 0) /
+                    this.loopTime.length);
+        }
+
         this.player.draw(context);
         this.player.update();
         this.projectilesPool.forEach(projectile => {
