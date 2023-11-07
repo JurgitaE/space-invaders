@@ -36,8 +36,7 @@ class Game {
     }
 
     render(context) {
-        // implementing speed sensitivity to individual user fps
-
+        //sensitivity to fps
         if (this.loopTime.length < 20) {
             this.loopTime.push(Date.now());
         }
@@ -50,7 +49,7 @@ class Game {
                     .reduce((a, b) => a + b, 0) /
                     this.loopTime.length);
         }
-
+        //
         this.player.draw(context);
         this.player.update();
         this.projectilesPool.forEach(projectile => {

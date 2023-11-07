@@ -7,22 +7,29 @@ class Wave {
         this.height = this.game.rows * this.game.enemySize;
         this.x = 0;
         this.y = -this.height;
-        this.speedX = 3; //adjusted 3/2
+        this.speedX = 3;
+        //sensitivity to fps
         this.speedXAdjusted = false;
+        this.initialYspeed = 5;
+        this.initialYspeedAdjusted = false;
+        //
         this.speedY = 0;
         this.enemies = [];
         this.create();
     }
 
     render(context) {
-        // implementing speed adjustment
+        //sensitivity to fps
         if (!this.speedXAdjusted && this.game.fps) {
-            console.log(this.game.fps);
             this.speedXAdjusted = true;
-            this.speedX = this.speedX * (this.game.standardFps / this.game.fps);
-            console.log(this.game.standardFps / this.game.fps);
+            this.speedX *= this.game.standardFps / this.game.fps;
         }
-
+        if (!this.initialYspeedAdjusted && this.game.fps) {
+            this.initialYspeedAdjusted = true;
+            this.initialYspeed *= this.game.standardFps / this.game.fps;
+        }
+        //
+        if (this.y < 0) this.y += this.initialYspeed;
         this.speedY = 0;
         context.strokeRect(this.x, this.y, this.width, this.height);
 
