@@ -31,7 +31,6 @@ class Wave {
         //
         if (this.y < 0) this.y += this.initialYspeed;
         this.speedY = 0;
-        context.strokeRect(this.x, this.y, this.width, this.height);
 
         if (this.x < 0 || this.x > this.game.width - this.width) {
             this.speedX *= -1;
@@ -43,6 +42,7 @@ class Wave {
             enemy.update(this.x, this.y);
             enemy.draw(context);
         });
+        this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion);
     }
     create() {
         for (let y = 0; y < this.game.rows; y++) {

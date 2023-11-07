@@ -70,6 +70,9 @@ class Game {
             if (this.projectilesPool[i].free) return this.projectilesPool[i];
         }
     }
+    checkCollision(a, b) {
+        return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.width && a.y + a.width > b.y;
+    }
 }
 
 export default Game;
