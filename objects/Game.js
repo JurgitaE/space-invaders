@@ -14,8 +14,8 @@ class Game {
         this.numberOfProjectiles = 10;
         this.createProjectiles();
 
-        this.columns = 5;
-        this.rows = 5;
+        this.columns = 2;
+        this.rows = 2;
         this.enemySize = 60;
 
         this.waves = [];
@@ -32,6 +32,7 @@ class Game {
         window.addEventListener('keydown', e => {
             !this.keys.includes(e.key) && this.keys.push(e.key);
             if (e.key === ' ') this.player.shoot();
+            if (e.key === 'r' && this.gameOver) this.restart();
         });
         window.addEventListener('keyup', e => {
             const index = this.keys.indexOf(e.key);
@@ -110,6 +111,19 @@ class Game {
             this.rows++;
         }
         this.waves.push(new Wave(this));
+    }
+    restart() {
+        this.player.restart();
+
+        this.columns = 2;
+        this.rows = 2;
+
+        this.waves = [];
+        this.waves.push(new Wave(this));
+        this.waveCount = 1;
+
+        this.score = 0;
+        this.gameOver = false;
     }
 }
 
