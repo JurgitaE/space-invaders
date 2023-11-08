@@ -13,10 +13,11 @@ class Game {
         this.projectilesPool = [];
         this.numberOfProjectiles = 10;
         this.createProjectiles();
+        this.fired = false;
 
         this.columns = 2;
         this.rows = 2;
-        this.enemySize = 60;
+        this.enemySize = 80;
 
         this.waves = [];
         this.waves.push(new Wave(this));
@@ -30,11 +31,13 @@ class Game {
         this.standardFps = 60;
 
         window.addEventListener('keydown', e => {
+            if (e.key === ' ' && !this.fired) this.player.shoot();
+            this.fired = true;
             !this.keys.includes(e.key) && this.keys.push(e.key);
-            if (e.key === ' ') this.player.shoot();
             if (e.key === 'r' && this.gameOver) this.restart();
         });
         window.addEventListener('keyup', e => {
+            this.fired = false;
             const index = this.keys.indexOf(e.key);
             index > -1 && this.keys.splice(index, 1);
         });

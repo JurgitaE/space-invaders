@@ -1,13 +1,13 @@
-import Enemy from './Enemy.js';
+import { Beetlemorph, Enemy } from './Enemy.js';
 
 class Wave {
     constructor(game) {
         this.game = game;
         this.width = this.game.columns * this.game.enemySize;
         this.height = this.game.rows * this.game.enemySize;
-        this.x = 0;
+        this.x = this.game.width * 0.5 - this.width * 0.5;
         this.y = -this.height;
-        this.speedX = 3;
+        this.speedX = Math.random() < 0.5 ? -1 : 1;
         //sensitivity to fps
         this.speedXAdjusted = false;
         this.initialYspeed = 5;
@@ -50,7 +50,7 @@ class Wave {
             for (let x = 0; x < this.game.columns; x++) {
                 let enemyX = x * this.game.enemySize;
                 let enemyY = y * this.game.enemySize;
-                this.enemies.push(new Enemy(this.game, enemyX, enemyY));
+                this.enemies.push(new Beetlemorph(this.game, enemyX, enemyY));
             }
         }
     }

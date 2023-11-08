@@ -1,4 +1,3 @@
-import Projectile from './Projectile.js';
 class Player {
     constructor(game) {
         this.game = game;
