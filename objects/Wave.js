@@ -15,6 +15,7 @@ class Wave {
         //
         this.speedY = 0;
         this.enemies = [];
+        this.nextWaveTrigger = false;
         this.create();
     }
 
