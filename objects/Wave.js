@@ -8,11 +8,7 @@ class Wave {
         this.x = this.game.width * 0.5 - this.width * 0.5;
         this.y = -this.height;
         this.speedX = Math.random() < 0.5 ? -1 : 1;
-        //sensitivity to fps
-        this.speedXAdjusted = false;
-        this.initialYspeed = 5;
-        this.initialYspeedAdjusted = false;
-        //
+
         this.speedY = 0;
         this.enemies = [];
         this.nextWaveTrigger = false;
@@ -20,17 +16,7 @@ class Wave {
     }
 
     render(context) {
-        //sensitivity to fps
-        if (!this.speedXAdjusted && this.game.fps) {
-            this.speedXAdjusted = true;
-            this.speedX *= this.game.standardFps / this.game.fps;
-        }
-        if (!this.initialYspeedAdjusted && this.game.fps) {
-            this.initialYspeedAdjusted = true;
-            this.initialYspeed *= this.game.standardFps / this.game.fps;
-        }
-        //
-        if (this.y < 0) this.y += this.initialYspeed;
+        if (this.y < 0) this.y += 5;
         this.speedY = 0;
 
         if (this.x < 0 || this.x > this.game.width - this.width) {
