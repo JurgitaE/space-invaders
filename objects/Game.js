@@ -25,7 +25,7 @@ class Game {
 
         this.spriteUpdate = false;
         this.spriteTimer = 0;
-        this.spriteInterval = 120;
+        this.spriteInterval = 150;
 
         this.score = 0;
         this.gameOver = false;
@@ -54,19 +54,20 @@ class Game {
         }
 
         this.drawStatusText(context);
-        this.player.draw(context);
-        this.player.update();
         this.projectilesPool.forEach(projectile => {
             projectile.update();
             projectile.draw(context);
         });
+        this.player.draw(context);
+        this.player.update();
+
         this.waves.forEach(wave => {
             wave.render(context);
             if (wave.enemies.length < 1 && !wave.nextWaveTrigger && !this.gameOver) {
                 this.newWave();
                 this.waveCount++;
                 wave.nextWaveTrigger = true;
-                this.player.lives++;
+                if (this.player.lives < this.player.maxLives) this.player.lives++;
             }
         });
     }
@@ -90,8 +91,11 @@ class Game {
         context.shadowColor = 'black';
         context.fillText('Score: ' + this.score, 20, 40);
         context.fillText('Wave: ' + this.waveCount, 20, 80);
+        for (let i = 0; i < this.player.maxLives; i++) {
+            context.strokeRect(20 + 20 * i, 100, 10, 15);
+        }
         for (let i = 0; i < this.player.lives; i++) {
-            context.fillRect(20 + 10 * i, 100, 5, 20);
+            context.fillRect(20 + 20 * i, 100, 10, 15);
         }
         if (this.gameOver) {
             context.textAlign = 'center';
